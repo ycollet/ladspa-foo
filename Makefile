@@ -1,7 +1,5 @@
 CC=gcc
-CFLAGS=-O3 -Wall -fomit-frame-pointer -fstrength-reduce -funroll-loops -ffast-math -fPIC -DPIC -g -msse -mfpmath=sse
-#CFLAGS=-g -fPIC -DPIC
-
+INSTALL_PATH?=/usr/lib64/ladspa
 LIBFLAGS=-nostartfiles -shared -Wl,-Bsymbolic
 
 PLUGIN_LIBS    = foo_limiter.so foo_limiter_v2.so foo_transients.so foo_transients_mono.so foo_driver.so t00b_limiter.so foo_saturator.so foo_chop.so
@@ -30,7 +28,7 @@ $(PLUGIN_SOURCES): utils.h rms.h
 rms.o: rms.h
 
 install: plugins
-	cp $(PLUGIN_LIBS) /usr/lib/ladspa/
+	cp $(PLUGIN_LIBS) $(DESTDIR)/$(INSTALL_PATH)/
 
 clean:
 	rm -f *.o *.so $(PLUGIN_SOURCES) tester plot/*
